@@ -33,9 +33,7 @@ Data Collection (FanGraphs Webscraping)
         ↓
 Data Cleaning & Type Conversion
         ↓
-Service-Time Segmentation (Contract Type Assignment)
-        ↓
-K-Means Clustering (WAR × Service Time)
+Service-Time + IFA Clustering (4 Groups × 2 Player Types = 8 Total)
         ↓
 PCA (Dimensionality Reduction on Performance Metrics)
         ↓
@@ -165,6 +163,94 @@ Odds ratios and effect sizes are reported for the top 10 most influential variab
 - **Why PCA?** Performance metrics are highly correlated. PCA condenses them into uncorrelated components to avoid multicollinearity.
 - **Why cluster before modeling?** Players in different contract stages live in fundamentally different salary markets. One model for all players would be misleading.
 - **Why neural networks on top of regression?** Neural nets can capture non-linear salary patterns that linear models miss — but they require normalized inputs and more data to train reliably.
+
+---
+
+## 🗓️ 5-Week Mentee Curriculum
+
+> **Program Philosophy:** Mentees are given the *destination*, not the directions. The models to use are defined (clustering, linear regression, logistic regression, neural network), but every design decision — feature selection, thresholds, architecture, evaluation — is for the mentee to figure out and defend. The goal is independent thinking, not code-following.
+
+Each week = ~1 mentor session (60–90 min) + independent work on the deliverable.
+
+---
+
+### Week 1 — First Pitch: Onboarding & Setup
+`Guided` — *This is the only week with direct guidance. Everyone starts from the same baseline.*
+
+**Goal:** Get oriented with the domain, the data source, and the tools. Understand what the project is trying to answer — and why it's hard.
+
+Guiding questions:
+- What is MLB's salary structure? Why does service time matter so much?
+- What is FanGraphs? How do you navigate it, download data, and understand what each stat means?
+- What is the difference between a batter and a pitcher stat sheet?
+- Set up your environment: R or Python — your choice. Get the data loaded.
+- What does "salary fairness" even mean? How would *you* define overpaid vs. underpaid?
+
+**✏️ Deliverable:** Come next session with: (1) the data loaded, (2) a written definition of what "overpaid" means to you, and (3) one question about the data you don't know how to answer yet.
+
+---
+
+### Week 2 — Find the Groups: Clustering
+`Open Design` — *Mentees decide how to cluster. The mentor only sets the destination.*
+
+**Goal:** Segment players into meaningful groups before modeling. The goal is fair comparison — not mixing league-minimum rookies with $30M free agents.
+
+Guiding questions:
+- What makes two players truly "comparable" when it comes to salary?
+- You know about MLB's service-time system from Week 1 — how should that shape your groups?
+- What about international players who never went through the normal service-time path?
+- What clustering method will you use? How many groups makes sense, and why?
+- How will you know if your clusters are actually meaningful?
+
+**✏️ Deliverable:** Present your clustering design — how many groups, what defines each one, and why. Be ready to defend your choices, not just show the output.
+
+---
+
+### Week 3 — Predict the Price: Linear Regression
+`Open Design` — *Mentees choose their features, transformations, and evaluation approach.*
+
+**Goal:** Build a model that predicts player salary from performance metrics. Use this to identify who is being paid fairly — and who isn't.
+
+Guiding questions:
+- Which stats do you think actually drive salary? Start with intuition, then test it.
+- Salary distributions are skewed. Does that affect how you model? What can you do about it?
+- Should you build one model for all players, or separate models per cluster? Why?
+- How will you measure whether your predictions are actually good enough?
+- How do you decide who is "overpaid" vs. "underpaid"? Where's your line — and how did you choose it?
+
+**✏️ Deliverable:** Show your model, your accuracy metrics, and a list of the top 5 most overpaid and underpaid players. Explain the threshold you chose and why.
+
+---
+
+### Week 4 — Call the Play: Logistic Regression
+`Open Design` — *Mentees decide what to classify, which features to include, and how to interpret.*
+
+**Goal:** Flip the question — instead of predicting salary, classify whether a player IS overpaid or underpaid. Find out which performance stats are the biggest drivers.
+
+Guiding questions:
+- How is classification different from regression? What changes in your setup?
+- Use the valuation flags from Week 3 as your target — but should you trust them as-is?
+- Which stats end up mattering most? Does this match your Week 3 intuition?
+- Do the same stats matter for batters and pitchers? For different contract groups?
+- What does this model tell you that Week 3 didn't?
+
+**✏️ Deliverable:** Present which 3 stats best predict overpayment, and which best predict being underpaid. Are they the same stats? Why or why not?
+
+---
+
+### Week 5 — Walk-Off: Neural Network + Final Presentation
+`Open + Capstone` — *Mentees choose their own NN architecture and compare all three models themselves.*
+
+**Goal:** Add a neural network to your analysis. Compare all three models. Present your full story — not just the results, but what you learned and what you'd do differently.
+
+Guiding questions:
+- What can a neural network do that linear regression can't? When would you choose one over the other?
+- How do you prepare your data for a neural network? What's different from regression?
+- How many layers? How many neurons? How do you decide — and how do you know if it's working?
+- Compare your three models side by side: which performed best? Which was most interpretable?
+- If you had 3 more weeks, what would you build next?
+
+**✏️ Deliverable:** 10-minute final presentation covering your design decisions, model comparison, most interesting finding, and one thing you'd change. No slides required — just talk through it.
 
 ---
 
