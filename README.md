@@ -57,31 +57,32 @@ Evaluation: RMSE, MAPE, Residual Analysis
 
 ---
 
-## 🧩 Part 1 — Service-Time Segmentation (Clustering Groups)
+# 🧩 Part 1 & 2 — Clustering Strategy (Service-Time Driven)
 
-Before any ML model runs, players are segmented by **contract type** using MLB's service-time rules. This is a critical preprocessing step because salary is *structurally* determined by how long a player has been in the league — not just performance.
+The clustering approach is the **foundation of this project**. Rather than letting an algorithm discover arbitrary groups, we use MLB's economic structure directly. Service time is treated as a **numeric feature** in the clustering process — not a fixed label — so the model learns the salary boundaries organically while still respecting real-world contract rules.
 
-| Cluster Group | Service Time | Contract / Market Interpretation |
+This same 4-cluster structure is applied to **both batters and pitchers**, producing **8 total groups**.
+
+| # | Cluster | Service Time | Contract / Market Interpretation |
+|---|---|---|---|
+| 1 | **Pre-Arbitration (Pre-Arb)** | 0–3 years | Players have almost no negotiation power; salaries are league-minimum or slightly above. |
+| 2 | **Arbitration Eligible (Arb)** | 3–6 years | Players gain partial bargaining power; salaries begin to reflect performance. |
+| 3 | **Free Agent Eligible (FA)** | 6+ years | Players receive full market value driven by open bidding and team competition. |
+| 4 | **International Free Agents (IFA)** | No traditional service time | Players who entered MLB via international signing — bypassing the standard service-time ladder — but receive contracts comparable to established free agents. |
+
+> **Examples of IFA players:**
+> - **Batters:** Shohei Ohtani, Seiya Suzuki, Jung Hoo Lee, Masataka Yoshida, Ha-Seong Kim
+> - **Pitchers:** Yoshinobu Yamamoto, Shota Imanaga, Kodai Senga, Yuki Matsui
+
+> **Why this matters:** Comparing a Pre-Arb player's salary to a Free Agent's without segmenting first would produce meaningless model results. Service time is one of the strongest natural clustering mechanisms in professional sports — it must be incorporated into the model, not ignored.
+
+**Total cluster breakdown:**
+
+| Player Type | Clusters | Count |
 |---|---|---|
-| **Pre-Arbitration (Pre-Arb)** | 0–3 years | Players have almost no negotiation power; salaries are league-minimum or slightly above. |
-| **Arbitration Eligible (Arb)** | 3–6 years | Players gain partial bargaining power; salaries begin to reflect performance. |
-| **Free Agent Eligible (FA)** | 6+ years | Players receive full market value driven by open bidding and team competition. |
-
-> **Why this matters:** Comparing a Pre-Arb player's salary to a Free Agent's without segmenting first would produce meaningless model results. Service time must be included in clustering.
-
-International free agents (e.g., Shohei Ohtani, Yoshinobu Yamamoto) are manually assigned to the `FA` group regardless of MLB service time.
-
----
-
-## 🔵 Part 2 — K-Means Clustering (Performance Groups)
-
-Within each contract segment, **K-Means clustering** (`k = 4`) is applied on `WAR` and `service_time` (scaled) to group players by performance profile.
-
-- **Batters:** 4 clusters
-- **Pitchers:** 4 clusters
-- **Total:** 8 groups across both player types
-
-This produces **comparable peer groups** for salary modeling.
+| Batters | Pre-Arb, Arb, FA, IFA | 4 |
+| Pitchers | Pre-Arb, Arb, FA, IFA | 4 |
+| **Total** | | **8 groups** |
 
 ---
 
@@ -123,7 +124,7 @@ Odds ratios and effect sizes are reported for the top 10 most influential variab
 - Min-Max normalization applied to all predictor variables
 - `LogSalary` (target) is also Min-Max scaled and reverse-transformed after prediction
 
-**Separate NN models are trained per cluster** (one model per K-Means group) for both batters and pitchers.
+**Separate NN models are trained per cluster** (one model per service-time group: Pre-Arb, Arb, FA, IFA) for both batters and pitchers.
 
 **Evaluation Metrics:**
 - **RMSE** — Root Mean Squared Error (in dollars)
