@@ -206,51 +206,59 @@ Guiding questions:
 
 ---
 
-### Week 3 — Predict the Price: Linear Regression
-`Open Design` — *Mentees choose their features, transformations, and evaluation approach.*
+### Week 3 — Predict the Price: Linear + Logistic Regression
+`Open Design` — *Mentees choose their features, transformations, thresholds, and evaluation approach.*
 
-**Goal:** Build a model that predicts player salary from performance metrics. Use this to identify who is being paid fairly — and who isn't.
+**Goal:** Build models that both predict salary and classify valuation. Use them together to identify who is being paid fairly — and who isn't.
 
 Guiding questions:
 - Which stats do you think actually drive salary? Start with intuition, then test it.
-- Salary distributions are skewed. Does that affect how you model? What can you do about it?
+- Salary distributions are skewed — does that affect how you model? What can you do about it?
 - Should you build one model for all players, or separate models per cluster? Why?
-- How will you measure whether your predictions are actually good enough?
-- How do you decide who is "overpaid" vs. "underpaid"? Where's your line — and how did you choose it?
+- How do you decide the line between "overpaid" and "fairly paid"? How did you choose it?
+- What does logistic regression add that linear regression alone can't tell you?
 
-**✏️ Deliverable:** Show your model, your accuracy metrics, and a list of the top 5 most overpaid and underpaid players. Explain the threshold you chose and why.
-
----
-
-### Week 4 — Call the Play: Logistic Regression
-`Open Design` — *Mentees decide what to classify, which features to include, and how to interpret.*
-
-**Goal:** Flip the question — instead of predicting salary, classify whether a player IS overpaid or underpaid. Find out which performance stats are the biggest drivers.
-
-Guiding questions:
-- How is classification different from regression? What changes in your setup?
-- Use the valuation flags from Week 3 as your target — but should you trust them as-is?
-- Which stats end up mattering most? Does this match your Week 3 intuition?
-- Do the same stats matter for batters and pitchers? For different contract groups?
-- What does this model tell you that Week 3 didn't?
-
-**✏️ Deliverable:** Present which 3 stats best predict overpayment, and which best predict being underpaid. Are they the same stats? Why or why not?
+**✏️ Deliverable:** Show your models, accuracy metrics, and your top 5 most overpaid and underpaid players. Present which stats most predict overpayment — and whether they differ for batters vs. pitchers.
 
 ---
 
-### Week 5 — Walk-Off: Neural Network + Final Presentation
-`Open + Capstone` — *Mentees choose their own NN architecture and compare all three models themselves.*
+### Week 4 — The Deep End: Neural Network
+`Open Design` — *Mentees choose their own NN architecture, normalization strategy, and training setup.*
 
-**Goal:** Add a neural network to your analysis. Compare all three models. Present your full story — not just the results, but what you learned and what you'd do differently.
+**Goal:** Add a neural network to your analysis and compare it against your regression models. Understand where it helps — and where it doesn't.
 
 Guiding questions:
-- What can a neural network do that linear regression can't? When would you choose one over the other?
+- What can a neural network do that linear regression can't? When would you want one over the other?
 - How do you prepare your data for a neural network? What's different from regression?
 - How many layers? How many neurons? How do you decide — and how do you know if it's working?
-- Compare your three models side by side: which performed best? Which was most interpretable?
-- If you had 3 more weeks, what would you build next?
+- Should you train one NN for all players or one per cluster? What are the tradeoffs?
+- How does your NN compare to your Week 3 models on the same players?
 
-**✏️ Deliverable:** 10-minute final presentation covering your design decisions, model comparison, most interesting finding, and one thing you'd change. No slides required — just talk through it.
+**✏️ Deliverable:** Run your neural network and document the results. Start preparing your visualizations — you'll need them for Week 5.
+
+---
+
+### Week 5 — Walk-Off: Visualization + Final Presentation
+`Viz + Capstone` — *Visualization is not a bonus — it is the presentation. Your charts must tell the story.*
+
+**Goal:** Translate all three models into visuals, then present your full project end-to-end. You cannot present findings you haven't visualized first.
+
+Guiding questions:
+- How do you show your clusters in a way that makes the groupings intuitive?
+- What does a residual chart tell you — and what should yours look like if the model is working well?
+- How do you visualize prediction accuracy? What would "perfect" look like on that chart?
+- Which model performed best, and which was most useful? Are those the same answer?
+- Who is the most underpaid player in your analysis — and can you prove it visually?
+
+Required charts (intermediate level):
+- **Cluster plot** — players grouped visually by your chosen features
+- **Salary distribution** — before and after log transformation, per cluster
+- **Actual vs. Predicted salary chart** — for linear regression and neural network
+- **Residual chart** — show where your model over- and under-predicts
+- **Valuation flag breakdown** — overpaid / fairly paid / underpaid per cluster
+
+**✏️ Deliverable:** 10-minute final presentation walking through your charts. Cover: design decisions, model comparison, most interesting finding, and one thing you'd change. No slides required — your visualizations are the presentation.
+
 
 ---
 
