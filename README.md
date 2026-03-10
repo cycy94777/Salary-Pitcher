@@ -29,7 +29,7 @@ mlb-salary-analysis/
 ## 🔄 Pipeline Overview
 
 ```
-Data Collection (FanGraphs Webscraping)
+Data Collection (FanGraphs)
         ↓
 Data Cleaning & Type Conversion
         ↓
@@ -181,7 +181,7 @@ Each week = ~1 mentor session (60–90 min) + independent work on the deliverabl
 
 Guiding questions:
 - What is MLB's salary structure? Why does service time matter so much?
-- What is FanGraphs? How do you navigate it, download data, and understand what each stat means?
+- What is FanGraphs? How do you navigate it, download (web scraping) data, and understand what each stat means?
 - What is the difference between a batter and a pitcher stat sheet?
 - Set up your environment: R or Python — your choice. Get the data loaded.
 - What does "salary fairness" even mean? How would *you* define overpaid vs. underpaid?
